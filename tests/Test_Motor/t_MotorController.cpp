@@ -1,5 +1,5 @@
 
-#include "MotorController.h"
+#include "t_MotorController.h"
 
 // Motor id a number that symbol a specefic dc motor
 // F_R  0 = O-O = 1  F_L
@@ -7,10 +7,12 @@
 // B_R  4 = O-O = 5  B_L
 // Motor id a number that symbol a specefic dc motor 
 
-DCmotor::DCmotor(int MotorId) {
-// initialize pin assignments
-    IN1 = DCmotor_F_L_1;
-    IN2 = DCmotor_F_L_2;
+DCmotor::DCmotor(int MotorId, int IN1Pin, int IN2Pin) {
+// initialize pin assignments per motor ID
+    this->MotorId = MotorId;
+    IN1 = IN1Pin;
+    IN2 = IN2Pin;
+
 }
 
 void DCmotor::setup() {
@@ -50,5 +52,6 @@ void DCmotor::setMove(bool forward, int speed) {
             digitalWrite(IN2, HIGH);
         }
     }
+    
   
   
