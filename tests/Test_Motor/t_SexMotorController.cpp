@@ -36,6 +36,10 @@ void testMotors() {
 void setMotorsSpeed(int speedArray[6]) {
 	for (int i = 0; i < 6; ++i) {
 		int speed = speedArray[i];
+		if(speed==999){
+			continue;
+		}
+
 		if (speed >= 0) {
 			motors[i].setMove(true, speed);
 		} else {
