@@ -1,7 +1,19 @@
 #include "t_MotorController.h"
+/*
+ Create six DCmotor objects and store them in an array
+symbolizing the six motors of the rover:
 
-// Create six DCmotor objects and store them in an array
-// Each motor is initialized with its specific control pins
+ F_L  0 = O-O = 1  F_R
+ M_L  2 = O+O = 3  M_R	
+ B_L  4 = O-O = 5  B_R
+
+ Each motor is initialized with its specific control pins
+  
+ */
+
+/// Helper array to hold speed values for each motor
+int null_speed_vector[6] = {null,null,null,null,null,null};
+
 DCmotor motors[6] = {
 
 	DCmotor(0, DCmotor_F_L_pin1, DCmotor_F_L_pin2),
@@ -33,10 +45,11 @@ void testMotors() {
 }
 // Set speeds for all motors based on an input array
 // Positive values for forward, negative for reverse
+// A value of null=999 means to skip setting of the i motor
 void setMotorsSpeed(int speedArray[6]) {
 	for (int i = 0; i < 6; ++i) {
 		int speed = speedArray[i];
-		if(speed==999){
+		if(speed==null){
 			continue;
 		}
 

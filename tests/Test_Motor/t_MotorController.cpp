@@ -1,12 +1,27 @@
 
 #include "t_MotorController.h"
+/*
+ this api is for dc motor control encludes:
+ stop - stop the motor
+ setMove (forward) - set a DC motor at full speed
+ setMove (forward,speed) -set a DC motor at variable speed depends on speed parameter (max speed 255)
 
-// Motor id a number that symbol a specefic dc motor
-// F_R  0 = O-O = 1  F_L
-// M_R  2 = O+O = 3  M_L
-// B_R  4 = O-O = 5  B_L
-// Motor id a number that symbol a specefic dc motor 
+ Motor id a number that symbol a specefic dc motor in the structer:
+ F_R  0 = O-O = 1  F_L
+ M_R  2 = O+O = 3  M_L
+ B_R  4 = O-O = 5  B_L
 
+every motor has two control pins: IN1, IN2
+there purpose to control the speed  and direction of the motor:
+when IN1 is HIGH and IN2 is LOW the motor runs forward
+when IN1 is LOW and IN2 is HIGH the motor runs reverse
+when both IN1 and IN2 are LOW or HIGH the motor stops
+A pwm signal on IN1 controls the speed of the motor
+
+the motor driver experemented with driver L298N 
+but in the project we will use DRV8871
+ 
+*/
 DCmotor::DCmotor(int MotorId, int IN1Pin, int IN2Pin) {
 // initialize pin assignments per motor ID
     this->MotorId = MotorId;

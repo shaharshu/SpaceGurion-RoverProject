@@ -15,9 +15,32 @@ void setup() {
 void loop()
 
 {
-   testMotors();
+ This is a simple test code for full 6 DC motor control 
+  {
+  int speeds[6] = {200, -150, 255, -255, 100, -100};
+  setMotorsSpeed(speeds);
+  Serial.println("motors moving");
+  delay(3000); // Run motors for 3 seconds
+  stopAllMotors();
+  Serial.println("motors stopped");
+  delay(2000); // Wait for 2 seconds before next command
+
+  for (int i = 0; i < 6; i++)
+      {
+      int speeds_2[6]= null_speed_vector[6];
+      delay(1000);
+      speeds_2[i] = 200;
+      setMotorsSpeed(speeds_2);
+      Serial.print("motor ");Serial.print(i);Serial.println(" moving");
+      }
+      stopAllMotors();
+      
    
-/*
+  }
+  
+
+}  */
+/* this is a simple test code for dc motor control
 {
  myDCmotor.setMove(true); 
  Serial.println("go");

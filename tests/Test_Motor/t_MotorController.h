@@ -23,12 +23,16 @@
 #define DCmotor_B_R_pin2 10
 
 #define MaxSpeed 255
+#define null 999
+
 
 // Test helpers (defined in t_SexMotorController.cpp)
 void setupMotors();
 void testMotors();
 void setMotorsSpeed();
 void stopAllMotors();
+
+extern int null_speed_vector[6]; //helper to build a vector speed values for each motor
 
 class DCmotor {
     private:
@@ -38,7 +42,7 @@ class DCmotor {
     public:
         DCmotor(int MotorId, int IN1Pin, int IN2Pin);
         void setup();
-      
+        
         // set move with one parameter - full speed
         void setMove(bool forward, int speed);
 
