@@ -31,7 +31,7 @@ void loop() {
   delay(1000);
   
   Serial.println("Half revolution clockwise");
-  myStepper.step(STEPS_PER_REV/2);   // 360° one way
+  myStepper.step(STEPS_PER_REV/2);   // 180 one way
   delay(1000);
 
   Serial.println("One revolution counterclockwise");
