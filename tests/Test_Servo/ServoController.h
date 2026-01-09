@@ -1,13 +1,12 @@
 #ifndef SERVO_MOTOR_H
 #define SERVO_MOTOR_H
 
+#include <Arduino.h>
 #include <Servo.h>
-//#include "config.h" 
-
+#include <ServoEasing.h>
 
 // --- Configuration Constants ---
 #define SERVO_PIN 9              // Digital pin connected to the servo signal wire
-#define BAUD_RATE 9600           // Serial communication speed
 #define MAX_PULSE_WIDTH 2500     // Maximum pulse width (microseconds)
 #define MIN_PULSE_WIDTH 500      // Minimum pulse width (microseconds)
 #define MIN_ANGLE -135           // Minimum servo angle (degrees)
@@ -40,7 +39,7 @@ public:
     int getID();
 
 private:
-    Servo _servo;           // Servo object from Servo library
+    ServoEasing _servo;           // Servo object from Servo library
     int _id;                // Unique ID for the servo
     int _pin;               // Pin number
     int _currentAngle;      // Current angle position

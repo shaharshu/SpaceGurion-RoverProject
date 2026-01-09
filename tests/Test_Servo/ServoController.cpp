@@ -1,5 +1,7 @@
-#include "ServoController.h"
 #include <Arduino.h>
+#include <ServoEasing.hpp>
+#include "ServoController.h"
+
 
 // Constructor
 ServoMotor::ServoMotor(int id, int pin) {
@@ -11,7 +13,9 @@ ServoMotor::ServoMotor(int id, int pin) {
 // Initialize the servo
 void ServoMotor::init() {
     _servo.attach(_pin);
-    _servo.write(_currentAngle);
+    _currentAngle = 0;
+    int pulse = map(0, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);;
+    _servo.writeMicroseconds(pulse);
     delay(15); // Give servo time to reach initial position
 }
 
@@ -33,6 +37,20 @@ void ServoMotor::adjustAngle(int delta) {
 // Get current angle
 int ServoMotor::getAngle() {
     return _currentAngle;
+}
+
+void ServoMotor::moveToAngle(int targetAngle, int speedDegSec)
+{
+    if (targetAngle < MIN_ANGLE) targetAngle = MIN_ANGLE;
+    if (targetAngle > MAX_ANGLE) targetAngle = MAX_ANGLE;
+
+    int angleDiff = abs(targetAngle - _currentAngle);
+    if (angleDiff == 0) return; // Already at target
+
+    int durationMs = (angleDiff * 1000) / speedDegSec; // Calculate duration based on speed
+    _servo.easeTo(targetAngle, durationMs);
+
+    _currentAngle = targetAngle;
 }
 
 // Get servo ID
