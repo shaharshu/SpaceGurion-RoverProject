@@ -1,4 +1,5 @@
 #include <Stepper.h>
+#include "../../src/RoverProject/Stepper/QuadPinsStepperController.h"
 
 // For 28BYJ-48 with ~2048 steps per revolution (gear + half-steps)
 const int STEPS_PER_REV = 2048;
