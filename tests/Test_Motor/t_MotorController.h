@@ -7,8 +7,8 @@
 #define DCmotor_F_L_pin1 9 //pWM pin
 #define DCmotor_F_L_pin2 10
 
-#define DCmotor_F_R_pin1 12 //pWM pin
-#define DCmotor_F_R_pin2 13
+#define DCmotor_F_R_pin1 9 //pWM pin
+#define DCmotor_F_R_pin2 10
 
 #define DCmotor_M_L_pin1 9 //pWM pin
 #define DCmotor_M_L_pin2 10
@@ -29,7 +29,7 @@
 // Test helpers (defined in t_SexMotorController.cpp)
 void setupMotors();
 void testMotors();
-void setMotorsSpeed();
+void setMotorsSpeed(int speedArray[6]);
 void stopAllMotors();
 
 extern int null_speed_vector[6]; //helper to build a vector speed values for each motor

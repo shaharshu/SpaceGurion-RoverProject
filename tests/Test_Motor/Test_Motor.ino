@@ -3,7 +3,7 @@
 #include "t_MotorController.h"
 
 
-//DCmotor myDCmotor = new DCmotor(0);
+//DCmotor myDCmotor = new DCmotor(0,9,10);
 void setup() {
   setupMotors();
   testMotors();
@@ -15,7 +15,8 @@ void setup() {
 void loop()
 
 {
- This is a simple test code for full 6 DC motor control 
+ //This is a simple test code for full 6 DC motor control 
+ 
   {
   int speeds[6] = {200, -150, 255, -255, 100, -100};
   setMotorsSpeed(speeds);
@@ -27,7 +28,8 @@ void loop()
 
   for (int i = 0; i < 6; i++)
       {
-      int speeds_2[6]= null_speed_vector[6];
+      int speeds_2[6];
+      memcpy(speeds_2, null_speed_vector, sizeof(speeds_2));
       delay(1000);
       speeds_2[i] = 200;
       setMotorsSpeed(speeds_2);
@@ -39,9 +41,11 @@ void loop()
   }
   
 
-}  */
-/* this is a simple test code for dc motor control
+  
+ //this is a simple test code for dc motor control
+/*
 {
+
  myDCmotor.setMove(true); 
  Serial.println("go");
  delay(1000); // Delay for 1000 milliseconds
@@ -76,5 +80,6 @@ void loop()
       Serial.println("stop");
       delay(1000); // Delay for 1000 milliseconds
    }
-}*/
+}
+*/
 }
