@@ -1,7 +1,7 @@
 #ifndef RC_CONTROLLER_H
 #define RC_CONTROLLER_H
 #include <Arduino.h>
-#include <iBusBM.h>
+#include <IBusBM.h>
 
 /**
  * FLYSKY FS-i6X 6-CHANNEL MAPPING:
@@ -17,7 +17,7 @@
 // connect iBus receiver to Serial1 (RX1: pin 19) on Arduino Mega 
 class RCController {
     private:
-        iBusBM ibus;
+        IBusBM ibus;
     public:
         RCController();
         void begin(HardwareSerial &serial); // initializes the controller with given serial port

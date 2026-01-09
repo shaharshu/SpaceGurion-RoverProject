@@ -25,5 +25,5 @@ int RCController::readChannel(int channelIndex)
 bool RCController::isConnected()
 {
     // Return connection status
-    return ibus.isConnected();
+   // return ibus.isConnected();
 }
