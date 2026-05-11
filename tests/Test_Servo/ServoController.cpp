@@ -21,6 +21,10 @@ void ServoMotor::init() {
 
 // Set servo to specific angle immediately
 void ServoMotor::setAngle(int angle) {
+    // Clamp angle to valid range to prevent unsafe pulse widths
+    if (angle < MIN_ANGLE) angle = MIN_ANGLE;
+    if (angle > MAX_ANGLE) angle = MAX_ANGLE;
+    
     int pulse = map(angle, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH); // Map angle to pulse width
     _servo.writeMicroseconds(pulse);
     _currentAngle = angle;
