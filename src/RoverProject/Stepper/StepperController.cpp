@@ -86,5 +86,5 @@ bool StepperController::GotToDestination()
 void StepperController::RunBlocking()
 {
     while (!this->GotToDestination())
-    this->Run();
+        this->Run();
 }
