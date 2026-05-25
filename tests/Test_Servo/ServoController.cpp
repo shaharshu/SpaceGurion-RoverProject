@@ -24,7 +24,6 @@ void ServoMotor::setAngle(int angle) {
     // Clamp angle to valid range to prevent unsafe pulse widths
     if (angle < MIN_ANGLE) angle = MIN_ANGLE;
     if (angle > MAX_ANGLE) angle = MAX_ANGLE;
-    
     int pulse = map(angle, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH); // Map angle to pulse width
     _servo.writeMicroseconds(pulse);
     _currentAngle = angle;
@@ -51,7 +50,14 @@ void ServoMotor::moveToAngle(int targetAngle, int speedDegSec)
     int angleDiff = abs(targetAngle - _currentAngle);
     if (angleDiff == 0) return; // Already at target
 
+    // If speed is zero or negative, move immediately
+    if (speedDegSec <= 0) {
+        setAngle(targetAngle);
+        return;
+    }
+
     int durationMs = (angleDiff * 1000) / speedDegSec; // Calculate duration based on speed
+    if (durationMs < 1) durationMs = 1;
     _servo.easeTo(targetAngle, durationMs);
 
     _currentAngle = targetAngle;
