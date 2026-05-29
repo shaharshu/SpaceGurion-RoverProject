@@ -12,11 +12,11 @@ ServoMotor::ServoMotor(int id, int pin) {
 
 // Initialize the servo
 void ServoMotor::init() {
-    _servo.attach(_pin);
-    _currentAngle = 0;
-    int pulse = map(0, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);;
-    _servo.writeMicroseconds(pulse);
-    delay(15); // Give servo time to reach initial position
+    _servo.attach(_pin, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+    _currentAngle = 0; // Start at middle position
+
+    int pulse = map(0, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+    _servo.writeMicroseconds(pulse); // Move to middle position
 }
 
 // Set servo to specific angle immediately
@@ -24,30 +24,25 @@ void ServoMotor::setAngle(int angle) {
     // Clamp angle to valid range to prevent unsafe pulse widths
     if (angle < MIN_ANGLE) angle = MIN_ANGLE;
     if (angle > MAX_ANGLE) angle = MAX_ANGLE;
+    if (!_servo.attached()) {
+        _servo.attach(_pin, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+    }
     int pulse = map(angle, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH); // Map angle to pulse width
-    _servo.writeMicroseconds(pulse);
+    _servo.writeMicroseconds(pulse); 
     _currentAngle = angle;
 }
 
-// Adjust the current angle by the specified delta (degrees). Clamps to MIN_ANGLE..MAX_ANGLE.
-void ServoMotor::adjustAngle(int delta) {
-    int newAngle = _currentAngle + delta;
-    if (newAngle < MIN_ANGLE) newAngle = MIN_ANGLE;
-    if (newAngle > MAX_ANGLE) newAngle = MAX_ANGLE;
-    setAngle(newAngle);
-}
-
-// Get current angle
-int ServoMotor::getAngle() {
-    return _currentAngle;
-}
 
 void ServoMotor::moveToAngle(int targetAngle, int speedDegSec)
 {
     if (targetAngle < MIN_ANGLE) targetAngle = MIN_ANGLE;
     if (targetAngle > MAX_ANGLE) targetAngle = MAX_ANGLE;
 
-    int angleDiff = abs(targetAngle - _currentAngle);
+    if (!_servo.attached()) {
+        _servo.attach(_pin, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+    }
+
+    int angleDiff = targetAngle - _currentAngle;
     if (angleDiff == 0) return; // Already at target
 
     // If speed is zero or negative, move immediately
@@ -56,11 +51,39 @@ void ServoMotor::moveToAngle(int targetAngle, int speedDegSec)
         return;
     }
 
-    int durationMs = (angleDiff * 1000) / speedDegSec; // Calculate duration based on speed
-    if (durationMs < 1) durationMs = 1;
-    _servo.easeTo(targetAngle, durationMs);
+    _servo.setSpeed(speedDegSec); // Set speed in degrees per second
 
+    int servoTarget = map(targetAngle, MIN_ANGLE, MAX_ANGLE, 0, 180); // Map target angle to servo library's 0-180 domain
+    _servo.startEaseTo(servoTarget);
+
+    // Track the requested final angle in the class domain.
     _currentAngle = targetAngle;
+}
+
+// Adjust the current angle by the specified delta (degrees). Clamps to MIN_ANGLE..MAX_ANGLE.
+void ServoMotor::adjustAngle(int delta) {
+    int newAngle = getAngle() + delta;
+    if (newAngle < MIN_ANGLE) newAngle = MIN_ANGLE;
+    if (newAngle > MAX_ANGLE) newAngle = MAX_ANGLE;
+    setAngle(newAngle);
+}
+
+// Adjust the current angle by the specified delta (degrees) with a speed.
+// Uses moveToAngle so the transition occurs over time instead of instantly.
+void ServoMotor::adjustAngle(int delta, int speedDegSec) {
+    int newAngle = getAngle() + delta;
+    if (newAngle < MIN_ANGLE) newAngle = MIN_ANGLE;
+    if (newAngle > MAX_ANGLE) newAngle = MAX_ANGLE;
+    moveToAngle(newAngle, speedDegSec);
+}
+
+// Get current angle
+int ServoMotor::getAngle() {
+    if (_servo.attached()) {
+        int rawServo = _servo.getCurrentAngle(); // Get current angle in 0-180 range from Servo library
+        _currentAngle = map(rawServo, 0, 180, MIN_ANGLE, MAX_ANGLE);
+    }
+    return _currentAngle;
 }
 
 // Get servo ID

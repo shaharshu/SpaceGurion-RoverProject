@@ -26,6 +26,10 @@ public:
 
     // Adjust current angle by `delta` degrees (positive or negative). Result is clamped to MIN_ANGLE..MAX_ANGLE.
     void adjustAngle(int delta);
+
+    // Adjust current angle by `delta` degrees using a move speed (deg/sec).
+    // This performs a timed transition via moveToAngle().
+    void adjustAngle(int delta, int speedDegSec);
     
     // Get the current angle
     int getAngle();
