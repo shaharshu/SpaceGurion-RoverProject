@@ -7,9 +7,9 @@
  setMove (forward,speed) -set a DC motor at variable speed depends on speed parameter (max speed 255)
 
  Motor id a number that symbol a specefic dc motor in the structer:
- F_R  0 = O-O = 1  F_L
- M_R  2 = O+O = 3  M_L
- B_R  4 = O-O = 5  B_L
+ F_R  3 = O-O = 0  F_L
+ M_R  4 = O+O = 1  M_L
+ B_R  5 = O-O = 2  B_L
 
 every motor has two control pins: IN1, IN2
 there purpose to control the speed  and direction of the motor:
@@ -34,7 +34,6 @@ void DCmotor::setup() {
 // setup the motor control pins as outputs
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
-    Serial.begin(9600);
 }
 // stop the motor
 void DCmotor::stop() {

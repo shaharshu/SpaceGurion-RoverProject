@@ -4,23 +4,23 @@
 #include <Arduino.h>
 // configure and defined
 
-#define DCmotor_F_L_pin1 9 //pWM pin
-#define DCmotor_F_L_pin2 10
+#define DCmotor_F_L_pin1 7 //pWM pin
+#define DCmotor_F_L_pin2 6
 
-#define DCmotor_F_R_pin1 9 //pWM pin
+#define DCmotor_F_R_pin1 13 //pWM pin
 #define DCmotor_F_R_pin2 10
 
-#define DCmotor_M_L_pin1 9 //pWM pin
-#define DCmotor_M_L_pin2 10
+#define DCmotor_M_L_pin1 5 //pWM pin
+#define DCmotor_M_L_pin2 4
 
 #define DCmotor_M_R_pin1 9 //pWM pin
-#define DCmotor_M_R_pin2 10
+#define DCmotor_M_R_pin2 8
 
-#define DCmotor_B_L_pin1 9 //pWM pin
-#define DCmotor_B_L_pin2 10
+#define DCmotor_B_L_pin1 3 //pWM pin
+#define DCmotor_B_L_pin2 2
 
-#define DCmotor_B_R_pin1 9 //pWM pin
-#define DCmotor_B_R_pin2 10
+#define DCmotor_B_R_pin1 12 //pWM pin
+#define DCmotor_B_R_pin2 11
 
 #define MaxSpeed 255
 #define null 999

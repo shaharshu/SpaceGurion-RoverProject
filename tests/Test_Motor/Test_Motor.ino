@@ -18,7 +18,7 @@ void loop()
  //This is a simple test code for full 6 DC motor control 
  
   {
-  int speeds[6] = {200, -150, 255, -255, 100, -100};
+  int speeds[6] = {100, -150, 200, -255, 100, -100};
   setMotorsSpeed(speeds);
   Serial.println("motors moving");
   delay(3000); // Run motors for 3 seconds

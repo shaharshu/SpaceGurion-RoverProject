@@ -17,10 +17,10 @@ int null_speed_vector[6] = {null,null,null,null,null,null};
 DCmotor motors[6] = {
 
 	DCmotor(0, DCmotor_F_L_pin1, DCmotor_F_L_pin2),
-	DCmotor(1, DCmotor_F_R_pin1, DCmotor_F_R_pin2),
-	DCmotor(2, DCmotor_M_L_pin1, DCmotor_M_L_pin2),
-	DCmotor(3, DCmotor_M_R_pin1, DCmotor_M_R_pin2),
-	DCmotor(4, DCmotor_B_L_pin1, DCmotor_B_L_pin2),
+	DCmotor(3, DCmotor_F_R_pin1, DCmotor_F_R_pin2),
+	DCmotor(1, DCmotor_M_L_pin1, DCmotor_M_L_pin2),
+	DCmotor(4, DCmotor_M_R_pin1, DCmotor_M_R_pin2),
+	DCmotor(2, DCmotor_B_L_pin1, DCmotor_B_L_pin2),
 	DCmotor(5, DCmotor_B_R_pin1, DCmotor_B_R_pin2)
 
 };
