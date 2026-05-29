@@ -51,4 +51,11 @@ This defines the contract between the main system logic (P3) and the individual 
 | `void calculateServoAngles(float steeringInput)` | `void` | `float steeringInput` (range [$-1.0$, $1.0$]). | Calculates the four required servo angles based on Ackerman geometry and stores them internally. |
 | `int getAngle(int wheelID)` | `int` | `int wheelID` (0-3 for steering servos). | Returns the last calculated angle (in degrees) for a specific steering servo. |
 
+
+### 5. StepperController
+**Goal:** Generic control for drivers of stepper motors.
+| Function Name | Return Type | Parameters (Arguments) | Description |
+| :--- | :--- | :--- | :--- |
+| `StepperController()` | Constructor | None | Initializes with physical pin connections and driver mode/type. |
+| `void move_degrees(float degrees)` | `void` | `float degrees` | Calculates the servo steps  required to move the steper by the provided angle. |
 ---
