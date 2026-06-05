@@ -1,20 +1,48 @@
-#ifndef ROVERPROJECT_MOTORCONTROLLER_H
-#define ROVERPROJECT_MOTORCONTROLLER_H
+#ifndef MOTORCONTROLLER_H
+#define MOTORCONTROLLER_H
 
 #include <Arduino.h>
 // configure and defined
-#define DCmotor_F_L_1 9
-#define DCmotor_F_L_2 10
+
+#define DCmotor_F_L_pin1 7 //pWM pin
+#define DCmotor_F_L_pin2 6
+
+#define DCmotor_F_R_pin1 13 //pWM pin
+#define DCmotor_F_R_pin2 10
+
+#define DCmotor_M_L_pin1 5 //pWM pin
+#define DCmotor_M_L_pin2 4
+
+#define DCmotor_M_R_pin1 9 //pWM pin
+#define DCmotor_M_R_pin2 8
+
+#define DCmotor_B_L_pin1 3 //pWM pin
+#define DCmotor_B_L_pin2 2
+
+#define DCmotor_B_R_pin1 12 //pWM pin
+#define DCmotor_B_R_pin2 11
+
 #define MaxSpeed 255
+#define null 999
+
+
+// Test helpers (defined in SixMotorController.cpp)
+void setupMotors();
+void testMotors();
+void setMotorsSpeed(int speedArray[6]);
+void stopAllMotors();
+
+extern int null_speed_vector[6]; //helper to build a vector speed values for each motor
 
 class DCmotor {
     private:
         int IN1;
         int IN2;
+        int MotorId;
     public:
-        DCmotor(int MotorId);
+        DCmotor(int MotorId, int IN1Pin, int IN2Pin);
         void setup();
-      
+        
         // set move with one parameter - full speed
         void setMove(bool forward, int speed);
 
