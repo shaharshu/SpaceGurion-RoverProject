@@ -1,5 +1,3 @@
-#include <Arduino.h>
-#include <ServoEasing.hpp>
 #include "ServoController.h"
 
 

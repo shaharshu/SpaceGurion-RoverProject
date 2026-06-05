@@ -3,11 +3,9 @@
 
 #include <Arduino.h>
 #include <Servo.h>
-#include <ServoEasing.h>
+#include <ServoEasing.hpp>
 
-// --- Configuration Constants ---
-#define SERVO_PIN 9              // Digital pin connected to the servo signal wire
-#define MAX_PULSE_WIDTH 2500     // Maximum pulse width (microseconds)
+// --- Configuration Constants ---#define MAX_PULSE_WIDTH 2500     // Maximum pulse width (microseconds)
 #define MIN_PULSE_WIDTH 500      // Minimum pulse width (microseconds)
 #define MIN_ANGLE -135           // Minimum servo angle (degrees)
 #define MAX_ANGLE 135            // Maximum servo angle (degrees)
