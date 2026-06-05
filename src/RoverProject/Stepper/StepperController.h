@@ -1,18 +1,21 @@
 #pragma once
 
+// 60*1000*1000 = 60,000,000
+#define MICROSEC_IN_MIN 60000000
+
 class StepperController
 {
     private:
-        int _current_step;
-        int _steps_per_revolution;
-        int _home_step;
-
         int degreeToStep(float degree);
         float stepsToDegree(int steps);
 
     protected:
+        int _current_step;
+        int _steps_per_revolution;
+        int _home_step;
         int _target_position;
-
+        int _step_delay_microsec;
+        float _delay;
         virtual void doStep() = 0;
 
     public:
@@ -28,4 +31,5 @@ class StepperController
         virtual void Stop();
         virtual bool GotToDestination();
         virtual void RunBlocking();
+        virtual void SetSpeed(float rpm) = 0;
 };
