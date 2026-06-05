@@ -35,3 +35,4 @@ void loop() {
     testServo.moveToAngle(target, 60); // Move to target angle at 60 degrees per second
   }
 }
+
