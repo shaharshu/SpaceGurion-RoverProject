@@ -40,9 +40,6 @@ void StepperController::SetHome()
 
 void StepperController::MoveToDegree(float degree)
 {
-    if(degree == this->CurrentAngle())
-        return;
-    
     this->MoveToStep(this->degreeToStep(degree));
 }
 
@@ -62,7 +59,7 @@ void StepperController::MoveToStep(int step)
 
 void StepperController::Run()
 {
-    if (this->_target_position == this->_current_step)
+    if (this->GotToDestination())
         return;
     
     if (this->_target_position > this->_current_step)
@@ -75,12 +72,12 @@ void StepperController::Run()
 
 void StepperController::Stop()
 {
-    this->_target_position = this->CurrentStep();
+    this->_target_position = this->_current_step;
 }
 
 bool StepperController::GotToDestination()
 {
-    return this->CurrentStep() == this->_target_position;
+    return this->_current_step == this->_target_position;
 }
 
 void StepperController::RunBlocking()
