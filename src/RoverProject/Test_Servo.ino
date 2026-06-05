@@ -1,4 +1,4 @@
-
+/*
 #include "ServoController.h"
 
 #define SERVO_PIN 9              // Digital pin connected to the servo signal wire
@@ -103,3 +103,4 @@ void loop() {
     
 // Nothing to do in loop
 }
+*/

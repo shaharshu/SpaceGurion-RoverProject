@@ -2,8 +2,9 @@
 #define SERVO_MOTOR_H
 
 #include <Arduino.h>
-#include <Servo.h>
-#include <ServoEasing.hpp>
+//#include <Servo.h>
+
+class ServoEasing;
 
 // --- Configuration Constants ---#define MAX_PULSE_WIDTH 2500     // Maximum pulse width (microseconds)
 #define MIN_PULSE_WIDTH 500      // Minimum pulse width (microseconds)
@@ -15,6 +16,7 @@ class ServoMotor {
 public:
     // Constructor: Initialize with pin number
     ServoMotor(int id, int pin);
+    ~ServoMotor();
 
     // Initialize the servo (attach to pin, set to default position)
     void init();
@@ -41,7 +43,7 @@ public:
     int getID();
 
 private:
-    ServoEasing _servo;           // Servo object from Servo library
+    ServoEasing* _servo;           // Servo object from Servo library
     int _id;                // Unique ID for the servo
     int _pin;               // Pin number
     int _currentAngle;      // Current angle position
