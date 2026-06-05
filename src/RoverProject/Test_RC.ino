@@ -1,41 +1,38 @@
 #include "RCController.h"
 
 // Create the controller object
-RCController myRemote;
-
+RCController RC;
 
 void setup() {
   // Initialize USB Serial for debugging at a fast speed
   Serial.begin(115200);
-  while (!Serial) { ; } // Wait for Serial monitor to open
+  RC.begin(Serial1);
+  }
 
-  // Start the RC Receiver on Serial1 (Pin 19)
-  myRemote.begin(Serial1);
-
-  Serial.println("--- FlySky i-BUS Test Initialized ---");
-}
 
 void loop() {
   // 1. Refresh data from the receiver
-  myRemote.update();
+  RC.update();
 
   // 2. Read the 4 main channels you defined
-  int steer  = myRemote.readChannel(0); // Right Stick X
-  int drive  = myRemote.readChannel(1); // Right Stick Y
-  int throttle   = myRemote.readChannel(2); // Left Stick Y
-  int left_sides    = myRemote.readChannel(3); // Left Stick X
-  int ch5 = myRemote.readChannel(4);
-  int ch6 = myRemote.readChannel(5);
+  int ch0  = RC.readChannel(0,-80,80); // Right Stick X
+  int ch1  = RC.readChannel(1,-180,180); // Right Stick Y
+  int ch2 = RC.readChannel(2,0,255); // Left Stick Y
+  int ch3 = RC.readChannel(3,-45,45); // Left Stick X
+  int ch4 = RC.readChannel(4,0,2); // Left Dial
+  int ch5 = RC.readChannel(5,0,1); // Right Dial
 
   // 3. Print the values to the Serial Monitor every 100ms
   static unsigned long lastPrint = 0;
   if (millis() - lastPrint > 500) {
-    Serial.print("Drive: "); Serial.print(drive);
-    Serial.print(" | Steer: "); Serial.print(steer);
-    Serial.print(" | Throttle: ");  Serial.print(throttle);
-    Serial.print(" | Left_sides: ");   Serial.println(left_sides);
-    Serial.print(" | Ch5: ");   Serial.println(ch5);
-    Serial.print(" | Ch6: ");   Serial.println(ch6);
+    Serial.print("Right stick Y: ");      Serial.print(ch0);
+    Serial.print(" | Right stick X: ");   Serial.println(ch1);
+    Serial.print(" | Left stick Y:: ");   Serial.print(ch2);
+    Serial.print(" | Left stick X: ");    Serial.println(ch3);
+    Serial.print(" | Left Dial: ");       Serial.print(ch4);
+    Serial.print(" | Right Dial: ");      Serial.println(ch5);
+    Serial.println("--------------------------------------------------");
+    Serial.print(" controller is connected:"); Serial.println(RC.isconnected()); // Ensure all data is sent before the next update
     
     lastPrint = millis();
   }
