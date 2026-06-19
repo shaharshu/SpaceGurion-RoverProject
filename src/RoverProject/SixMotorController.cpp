@@ -36,7 +36,7 @@ void setupMotors() {
 void testMotors() {
 	for (int i = 0; i < 6; ++i) {
 		motors[i].setMove(true, MaxSpeed);
-        delay(500);
+        delay(1000);
 		Serial.print(i);
         Serial.println(" DC motor in work");
 		motors[i].stop();
