@@ -1,8 +1,8 @@
 /*
+#include "config.h"
 #include "ServoController.h"
 
-#define SERVO_PIN 9              // Digital pin connected to the servo signal wire
-ServoMotor myServo(0, SERVO_PIN); // Create a ServoMotor object with ID 0 on defined pin
+ServoMotor myServo(0, SERVO_PIN);
 
 const unsigned long TEST_DELAY_MS = 2000; // ms between individual tests
 

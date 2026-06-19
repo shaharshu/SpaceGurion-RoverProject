@@ -1,8 +1,9 @@
 //#include "MotorController.h"
 //#include <ServoEasing.hpp>
+#include "config.h"
 #include "ServoController.h"
 
-ServoMotor testServo(1, 9); // Servo ID 1 on pin 9
+ServoMotor testServo(1, SERVO_PIN);
 
 void setup() {
   Serial.begin(9600);
@@ -32,7 +33,7 @@ void loop() {
     Serial.print("Servo loop: moving to ");
     Serial.print(target);
     Serial.println(" degrees");
-    testServo.moveToAngle(target, 60); // Move to target angle at 60 degrees per second
+    testServo.moveToAngle(target, SERVO_DEFAULT_MOVE_SPEED_DEG_SEC);
   }
 }
 

@@ -1,8 +1,5 @@
 #pragma once
 
-// 60*1000*1000 = 60,000,000
-#define MICROSEC_IN_MIN 60000000
-
 class StepperController
 {
     private:

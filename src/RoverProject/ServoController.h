@@ -2,15 +2,10 @@
 #define SERVO_MOTOR_H
 
 #include <Arduino.h>
+#include "config.h"
 //#include <Servo.h>
 
 class ServoEasing;
-
-// --- Configuration Constants ---#define MAX_PULSE_WIDTH 2500     // Maximum pulse width (microseconds)
-#define MIN_PULSE_WIDTH 500      // Minimum pulse width (microseconds)
-#define MIN_ANGLE -135           // Minimum servo angle (degrees)
-#define MAX_ANGLE 135            // Maximum servo angle (degrees)
-
 
 class ServoMotor {
 public:

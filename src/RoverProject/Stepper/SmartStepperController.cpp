@@ -1,5 +1,6 @@
 #include "SmartStepperController.h"
 #include <Arduino.h>
+#include "config.h"
 
 SmartStepperController::SmartStepperController(int step_pin, int direction_pin, int step_per_revolution, int current_step=0, int home=0)
     : StepperController(step_per_revolution, current_step, home)

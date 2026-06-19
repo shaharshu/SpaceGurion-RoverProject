@@ -2,6 +2,7 @@
 #define RC_CONTROLLER_H
 #include <Arduino.h>
 #include <IBusBM.h>
+#include "config.h"
 
 /*
  FLYSKY FS-i6X 6-CHANNEL MAPPING:
@@ -23,12 +24,6 @@
 connections on board:
 controller signal input: Serial1 RX pin (pin 19) on Arduino Mega
 */
-
-#define noiseMargine 20
-#define controllerMinValue 1000
-#define controllerMaxValue 2000
-#define controllerMidValue (controllerMinValue + controllerMaxValue) / 2
-#define linkTimeoutLimit 200
 
 // connect iBus receiver to Serial1 (RX1: pin 19) on Arduino Mega 
 class RCController {
