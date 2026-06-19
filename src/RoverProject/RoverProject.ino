@@ -1,7 +1,33 @@
-//#include "MotorController.h"
-//#include <ServoEasing.hpp>
-#include "ServoController.h"
 
+#include <ServoEasing.hpp>
+#include "ServoController.h"
+#include "MotorController.h"
+
+ServoMotor testServo(1, 22); // Servo ID 1 on pin 22
+
+void setup() {
+  Serial.begin(9600);
+  testServo.init();
+  setupMotors();
+}
+
+
+
+void loop(){
+  testMotors();
+
+  Serial.println("Servo test: moving to +45 degrees");
+  testServo.moveToAngle(45, 90);
+  delay(1000);
+
+  Serial.println("Servo test: moving to -45 degrees");
+  testServo.moveToAngle(-45, 90);
+  delay(1000);
+
+  Serial.println("Servo test: returning to 0 degrees");
+  testServo.moveToAngle(0, 90);
+}
+/*
 ServoMotor testServo(1, 9); // Servo ID 1 on pin 9
 
 void setup() {
@@ -35,4 +61,4 @@ void loop() {
     testServo.moveToAngle(target, 60); // Move to target angle at 60 degrees per second
   }
 }
-
+*/  

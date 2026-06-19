@@ -1,5 +1,5 @@
 #include "ServoController.h"
-#include <ServoEasing.hpp>
+#include <ServoEasing.h>
 
 // Constructor
 ServoMotor::ServoMotor(int id, int pin) {
