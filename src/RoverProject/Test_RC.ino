@@ -1,7 +1,11 @@
 #include "RCController.h"
 
 // Create the controller object
-RCController RC;
+const FailsefeRule myFailsafeRules[] = {
+    {2, 1000}
+};
+const uint8_t rulesCount = sizeof(myFailsafeRules) / sizeof(myFailsafeRules[0]);
+RCController RC(myFailsafeRules, rulesCount, 6);
 
 void setup() {
   // Initialize USB Serial for debugging at a fast speed
