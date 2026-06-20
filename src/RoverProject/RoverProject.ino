@@ -39,6 +39,8 @@ void setup() {
   setupMotors();
   setupServos();
   setupCameraTilt();
+
+  steering.setSpeedAndAngle(0, 0); // Start with speed=0 and angle=0
   
 
 }
@@ -50,6 +52,10 @@ void loop(){
   rc.update();
   ch0 = rc.readChannel(0,MIN_ANGLE,MAX_ANGLE); // Right Stick X - Steering angle
   ch2 = rc.readChannel(2,0,MaxSpeed);          // Left Stick Y - Throttle speed
+  
+  Serial.print("CH0: "); Serial.print(ch0);
+  Serial.print(" | CH2: "); Serial.println(ch2);
+  steering.setSpeedAndAngle(ch2, ch0); // Set speed and angle based on controller input
 
   // add logic to handle reverse motion
   // if [reverse] then steerting.forward = false

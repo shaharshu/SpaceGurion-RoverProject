@@ -35,14 +35,16 @@ void Steering::setSpeedAndAngle(int speed, int angle) {
     calculateSteeringAngles(R);
     calculateMotorSpeeds(R, speed);
 
+           
     // steering Right
-    if (angle > 0) {
+    if (angle > 10) {
         // Set all steering steering wheels to the specified angle
         // left side wheels are the oppesite direction of the right side wheels
         servos[0].moveToAngle(-angle_Fo); // front left
         servos[1].moveToAngle(angle_Fi); // front right
         servos[2].moveToAngle(-angle_Ro); // rear left
         servos[3].moveToAngle(angle_Ri); // rear right
+        
 
         // set motors speed (left side: 0,2,4 forward; right side: 1,3,5 inverted)
         motors[0].setMove(forward,speed_front_out);   // front left  (outer)
@@ -54,7 +56,7 @@ void Steering::setSpeedAndAngle(int speed, int angle) {
         motors[5].setMove(!forward,speed_rear_in);    // rear right  (inner)
     }
     // steering Left
-    else if (angle < 0) {
+    else if (angle < -10) {
         // Set all steering steering wheels to the specified angle
         // left side wheels are the oppesite direction of the right side wheels
         servos[0].moveToAngle(angle_Fi); // front left
