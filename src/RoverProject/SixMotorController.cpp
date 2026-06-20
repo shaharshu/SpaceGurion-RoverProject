@@ -7,22 +7,22 @@ symbolizing the six motors of the rover:
  M_L  2 = O+O = 3  M_R	
  B_L  4 = O-O = 5  B_R
 
- Each motor is initialized with its specific control pins
-  
  */
 
 /// Helper array to hold speed values for each motor
 int null_speed_vector[6] = {null,null,null,null,null,null};
 
-DCmotor motors[6] = {
-
-	DCmotor(0, DCmotor_F_L_pin1, DCmotor_F_L_pin2),
-	DCmotor(3, DCmotor_F_R_pin1, DCmotor_F_R_pin2),
-	DCmotor(1, DCmotor_M_L_pin1, DCmotor_M_L_pin2),
-	DCmotor(4, DCmotor_M_R_pin1, DCmotor_M_R_pin2),
-	DCmotor(2, DCmotor_B_L_pin1, DCmotor_B_L_pin2),
-	DCmotor(5, DCmotor_B_R_pin1, DCmotor_B_R_pin2)
-
+// The six DC drive motors. Index == MotorId, laid out to match the rover:
+//   FL 0 --- 1 FR
+//   ML 2 --- 3 MR
+//   BL 4 --- 5 BR
+DCmotor motors[DCmotor_COUNT] = {
+	DCmotor(0, DCmotor_F_L_pin1, DCmotor_F_L_pin2), // Front Left
+	DCmotor(1, DCmotor_F_R_pin1, DCmotor_F_R_pin2), // Front Right
+	DCmotor(2, DCmotor_M_L_pin1, DCmotor_M_L_pin2), // Middle Left
+	DCmotor(3, DCmotor_M_R_pin1, DCmotor_M_R_pin2), // Middle Right
+	DCmotor(4, DCmotor_B_L_pin1, DCmotor_B_L_pin2), // Rear Left
+	DCmotor(5, DCmotor_B_R_pin1, DCmotor_B_R_pin2)  // Rear Right
 };
 
 // Helper to initialize all motors

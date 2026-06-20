@@ -4,6 +4,9 @@
 #include <Arduino.h>
 
 // --- DC motor pins (IN1 = PWM where noted) ---
+//   FL  0 --- 1   FR
+//   ML  2 --- 3   MR
+//   BL  4 --- 5   BR
 #define DCmotor_F_L_pin1 7  // PWM pin
 #define DCmotor_F_L_pin2 6
 
@@ -24,17 +27,20 @@
 
 #define MaxSpeed 255
 #define null 999
+#define DCmotor_COUNT 6   // number of DC drive motors
 
 // --- Servo (5 servos, signal pins 22–26) ---
-#define SERVO_COUNT 5
+// FL 0 --- 1   FR
+//      ---
+// BL 2 --- 3   BR
+// 4 - Camera
+#define SERVO_COUNT 4   // number of steering servos (camera tilt is separate)
 
-#define SERVO_0_PIN 22
-#define SERVO_1_PIN 23
-#define SERVO_2_PIN 24
-#define SERVO_3_PIN 25
-#define SERVO_4_PIN 26
-
-#define SERVO_PIN SERVO_0_PIN // single-servo tests / default instance
+#define SERVO_0_PIN 22  // Front Left
+#define SERVO_1_PIN 23  // Front Right
+#define SERVO_2_PIN 24  // Rear Left
+#define SERVO_3_PIN 25  // Rear Right
+#define SERVO_4_PIN 26   // Camera
 
 #define MAX_PULSE_WIDTH 2500 // Maximum pulse width (microseconds)
 #define MIN_PULSE_WIDTH 500  // Minimum pulse width (microseconds)

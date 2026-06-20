@@ -80,12 +80,8 @@ void ServoMotor::adjustAngle(int delta, int speedDegSec) {
     moveToAngle(newAngle, speedDegSec);
 }
 
-// Get current angle
+// Get current angle.
 int ServoMotor::getAngle() {
-    if (_servo->attached()) {
-        int rawServo = _servo->getCurrentAngle(); // Get current angle in 0-180 range from Servo library
-        _currentAngle = map(rawServo, 0, 180, MIN_ANGLE, MAX_ANGLE);
-    }
     return _currentAngle;
 }
 

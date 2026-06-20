@@ -30,7 +30,7 @@ public:
     int getAngle();
     
     // Move servo smoothly to target angle at specified speed (deg/sec)
-    void moveToAngle(int targetAngle, int speedDegSec);
+    void moveToAngle(int targetAngle, int speedDegSec=SERVO_DEFAULT_MOVE_SPEED_DEG_SEC);
     
     // Detach servo to save power
     void detach();
