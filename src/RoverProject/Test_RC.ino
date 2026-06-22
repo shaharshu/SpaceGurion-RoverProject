@@ -2,7 +2,8 @@
 
 // Create the controller object
 const FailsefeRule myFailsafeRules[] = {
-    {2, 1000}
+    {4, 1501},
+    {5, 1500}
 };
 const uint8_t rulesCount = sizeof(myFailsafeRules) / sizeof(myFailsafeRules[0]);
 RCController RC(myFailsafeRules, rulesCount, 6);

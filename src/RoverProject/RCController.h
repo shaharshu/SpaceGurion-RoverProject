@@ -44,6 +44,8 @@ class RCController {
         const FailsefeRule* fsRules = nullptr; 
         int rulesCount = 0; 
         int activeChannelsCount;
+
+        bool _isFailesafeTriggered(); // checks if the failesafe rules are triggered, returns true if triggered, false otherwise.
         
     public:
         RCController(const FailsefeRule* failesafeRules, uint8_t rulesCount, uint8_t totalChannels = 6);

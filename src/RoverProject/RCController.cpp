@@ -28,22 +28,7 @@ bool RCController::update() // This should be called by the main Arduino loop
         return false;
     }
 
-    if (rulesCount == 0 || fsRules == nullptr)
-    {
-        isConnected = true;
-        return true;
-    }
-
-    bool allMonitoredMatchFailSafe = true;
-    int currentRawValue;
-    int i;
-    
-    for(i = 0; i < rulesCount && allMonitoredMatchFailSafe; i++){
-        if(ibus.readChannel(fsRules[i].channel) != fsRules[i].value)
-            allMonitoredMatchFailSafe = false;
-    }
-
-    if (allMonitoredMatchFailSafe)
+    if (_isFailsafeTriggered())
     {
         if (fsTime == 0) {
             fsTime = millis();
@@ -59,6 +44,28 @@ bool RCController::update() // This should be called by the main Arduino loop
     }
 
     return isConnected;
+}
+
+bool RCController::_isFailsafeTriggered()
+{
+    bool isFailsafeTriggered = true;
+    int i;
+
+    if (rulesCount == 0 || fsRules == nullptr)
+    {
+        isConnected = true;
+        return false;
+    }
+    
+    for(i = 0; i < rulesCount; i++){
+        if(ibus.readChannel(fsRules[i].channel) != fsRules[i].value)
+        {
+            isFailsafeTriggered = false;
+            break;
+        }
+    }
+
+    return isFailsafeTriggered;
 }
 
 bool RCController::isconnected()
