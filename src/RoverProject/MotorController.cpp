@@ -16,7 +16,9 @@ there purpose to control the speed  and direction of the motor:
 when IN1 is HIGH and IN2 is LOW the motor runs forward
 when IN1 is LOW and IN2 is HIGH the motor runs reverse
 when both IN1 and IN2 are LOW or HIGH the motor stops
-A pwm signal on IN1 controls the speed of the motor
+A pwm signal on IN1 (forward) or IN2 (reverse) controls the speed of the motor,
+so both pins must be PWM capable. Both directions use the same PWM mode so
+left and right side motors (which run in opposite directions) respond equally.
 
 the motor driver experemented with driver L298N 
 but in the project we will use DRV8871
@@ -65,8 +67,8 @@ void DCmotor::setMove(bool forward, int speed) {
             analogWrite(IN1, speed);
             digitalWrite(IN2, LOW);
         } else {
-            analogWrite(IN1,255-speed);
-            digitalWrite(IN2, HIGH);
+            digitalWrite(IN1, LOW);
+            analogWrite(IN2, speed);
         }
     }
     

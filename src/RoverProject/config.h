@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-// --- DC motor pins (IN1 = PWM where noted) ---
+// --- DC motor pins (IN1 and IN2 must both be PWM pins: IN1 drives forward, IN2 reverse) ---
 //   FL  0 --- 1   FR
 //   ML  2 --- 3   MR
 //   BL  4 --- 5   BR
