@@ -41,11 +41,11 @@ void Steering::setSpeedAndAngle(int speed, int angle) {
     // steering Right
     if (angle > 10) {
         // Set all steering steering wheels to the specified angle
-        // left side wheels are the oppesite direction of the right side wheels
-        servos[0].moveToAngle(-angle_Fo); // front left
-        servos[1].moveToAngle(angle_Fi); // front right
-        servos[2].moveToAngle(-angle_Ro); // rear left
-        servos[3].moveToAngle(angle_Ri); // rear right
+        // front wheels share one sign, rear wheels steer the opposite way (servos mounted as in the reference design)
+        servos[0].moveToAngle(angle_Fo);  // front left  (outer)
+        servos[1].moveToAngle(angle_Fi);  // front right (inner)
+        servos[2].moveToAngle(-angle_Ro); // rear left   (outer)
+        servos[3].moveToAngle(-angle_Ri); // rear right  (inner)
         
 
         // set motors speed (left side: 0,2,4 forward; right side: 1,3,5 inverted)
@@ -60,11 +60,11 @@ void Steering::setSpeedAndAngle(int speed, int angle) {
     // steering Left
     else if (angle < -10) {
         // Set all steering steering wheels to the specified angle
-        // left side wheels are the oppesite direction of the right side wheels
-        servos[0].moveToAngle(angle_Fi); // front left
-        servos[1].moveToAngle(-angle_Fo); // front right
-        servos[2].moveToAngle(angle_Ri); // rear left
-        servos[3].moveToAngle(-angle_Ro); // rear right
+        // front wheels share one sign, rear wheels steer the opposite way (servos mounted as in the reference design)
+        servos[0].moveToAngle(-angle_Fi); // front left  (inner)
+        servos[1].moveToAngle(-angle_Fo); // front right (outer)
+        servos[2].moveToAngle(angle_Ri);  // rear left   (inner)
+        servos[3].moveToAngle(angle_Ro);  // rear right  (outer)
 
         // set motors speed (left side: 0,2,4 forward; right side: 1,3,5 inverted)
         motors[0].setMove(forward,speed_front_in);    // front left  (inner)
