@@ -1,11 +1,12 @@
 #include "StepperController.h"
 
-StepperController::StepperController(int step_per_revolution, int current_step = 0, int home = 0)
+StepperController::StepperController(int step_per_revolution, int current_step, int home)
 {
     this->_current_step = current_step;
     this->_steps_per_revolution = step_per_revolution;
     this->_home_step = home;
-    this->_target_position = 0;
+    this->_target_position = current_step;
+    this->_delay = 0;
 }
 
 int StepperController::degreeToStep(float degree)
@@ -15,7 +16,7 @@ int StepperController::degreeToStep(float degree)
 
 float StepperController::stepsToDegree(int steps)
 {
-    return (steps / this->_steps_per_revolution) * 360.0;
+    return (steps / (float)this->_steps_per_revolution) * 360.0;
 }
 
 float StepperController::CurrentAngle()
@@ -40,7 +41,7 @@ void StepperController::SetHome()
 
 void StepperController::MoveToDegree(float degree)
 {
-    this->MoveToStep(this->degreeToStep(degree));
+    this->MoveToStep(this->_home_step + this->degreeToStep(degree));
 }
 
 

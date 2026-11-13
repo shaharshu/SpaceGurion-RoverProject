@@ -29,12 +29,14 @@ controller signal input: Serial1 RX pin (pin 19) on Arduino Mega
 class RCController {
     private:
         IBusBM ibus;
-        uint32_t lastFrame = 0;
+        uint32_t lastFrame = 0;      // last seen value of ibus.cnt_rec
+        uint32_t lastFrameTime = 0;  // millis() when a new frame was last seen
+        bool frameReceived = false;  // true once at least one frame has arrived
         
     public:
-        void begin(HardwareSerial &serial); // initializes the controller with given serial port, stops the program if colntroller is not connected.
-        void update(); // updates the controller state, needs to be called at least once in the main loop to refresh the data.
-        bool isconnected(); // returns true if the controller comunication is connected, false otherwise.
+        void begin(HardwareSerial &serial); // initializes the controller with given serial port.
+        void update(); // updates the controller state, must be called every main loop iteration (iBus frames arrive every ~7ms).
+        bool isconnected(); // returns true if a frame was received within the last linkTimeoutLimit ms, false otherwise.
         int readChannel(int channelIndex, int minValue = controllerMinValue, int maxValue = controllerMaxValue); // returns value of selected channel index, in operation range of minValue to maxValue, and noise margine.
 
 };

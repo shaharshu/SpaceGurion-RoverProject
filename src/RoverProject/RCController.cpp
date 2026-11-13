@@ -5,20 +5,27 @@ void RCController::begin(HardwareSerial &serial)
 {
   // Initialize USB Serial for debugging at a fast speed
   // Serial.begin(115200); should be defined in main file, not here.
-    ibus.begin(serial); 
+    // NOTIMER: update() is the only caller of ibus.loop(); the default timer ISR would also call it and corrupt frames.
+    ibus.begin(serial, IBUSBM_NOTIMER);
 }
 
 void RCController::update() 
 {
-    lastFrame = ibus.cnt_rec; // Update the previous frame countfor connection status check.
     // Update the iBus data
     ibus.loop(); // This should be called regularly in the main loop to refresh the data from the receiver
+
+    // cnt_rec increments (and wraps) on every received frame, so any change means a new frame.
+    if (ibus.cnt_rec != lastFrame) {
+        lastFrame = ibus.cnt_rec;
+        lastFrameTime = millis();
+        frameReceived = true;
+    }
 }
 
 
 bool RCController::isconnected()
 {
-    return lastFrame < ibus.cnt_rec;
+    return frameReceived && (millis() - lastFrameTime < linkTimeoutLimit);
 }
 
 int RCController::readChannel(int channelIndex, int minValue, int maxValue)

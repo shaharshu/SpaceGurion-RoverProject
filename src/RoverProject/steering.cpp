@@ -23,27 +23,29 @@ Steering::Steering(ServoMotor* servo_array, DCmotor* motor_array)
     
 // Set the target speed (0..MaxSpeed) and steering angle (MIN_ANGLE..MAX_ANGLE)
 void Steering::setSpeedAndAngle(int speed, int angle) {
-    // Map the commanded steering angle to an Ackermann turn radius.
-    float steerDeg = fabs((float)angle);
-    if (steerDeg > 80.0) steerDeg = 80.0; // avoid tan() blow-up / sign flip near 90 deg
-    R = distance_Lf / tan(steerDeg * PI / 180.0);
+    // Ackermann math only applies while turning; at angle 0 the radius is infinite.
+    if (angle > 10 || angle < -10) {
+        // Map the commanded steering angle to an Ackermann turn radius.
+        float steerDeg = fabs((float)angle);
+        if (steerDeg > 80.0) steerDeg = 80.0; // avoid tan() blow-up / sign flip near 90 deg
+        R = distance_Lf / tan(steerDeg * PI / 180.0);
 
-    float minRadius = ROVER_WIDTH / 2 + 1.0;
-    if (R < minRadius) R = minRadius;
+        float minRadius = ROVER_WIDTH / 2 + 1.0;
+        if (R < minRadius) R = minRadius;
 
-    // calculate angles and speeds using the Ackerman geometry
-    calculateSteeringAngles(R);
-    calculateMotorSpeeds(R, speed);
+        // calculate angles and speeds using the Ackerman geometry
+        calculateSteeringAngles(R);
+        calculateMotorSpeeds(R, speed);
+    }
 
-           
     // steering Right
     if (angle > 10) {
         // Set all steering steering wheels to the specified angle
-        // left side wheels are the oppesite direction of the right side wheels
-        servos[0].moveToAngle(-angle_Fo); // front left
-        servos[1].moveToAngle(angle_Fi); // front right
-        servos[2].moveToAngle(-angle_Ro); // rear left
-        servos[3].moveToAngle(angle_Ri); // rear right
+        // front wheels share one sign, rear wheels steer the opposite way (servos mounted as in the reference design)
+        servos[0].moveToAngle(angle_Fo);  // front left  (outer)
+        servos[1].moveToAngle(angle_Fi);  // front right (inner)
+        servos[2].moveToAngle(-angle_Ro); // rear left   (outer)
+        servos[3].moveToAngle(-angle_Ri); // rear right  (inner)
         
 
         // set motors speed (left side: 0,2,4 forward; right side: 1,3,5 inverted)
@@ -58,11 +60,11 @@ void Steering::setSpeedAndAngle(int speed, int angle) {
     // steering Left
     else if (angle < -10) {
         // Set all steering steering wheels to the specified angle
-        // left side wheels are the oppesite direction of the right side wheels
-        servos[0].moveToAngle(angle_Fi); // front left
-        servos[1].moveToAngle(-angle_Fo); // front right
-        servos[2].moveToAngle(angle_Ri); // rear left
-        servos[3].moveToAngle(-angle_Ro); // rear right
+        // front wheels share one sign, rear wheels steer the opposite way (servos mounted as in the reference design)
+        servos[0].moveToAngle(-angle_Fi); // front left  (inner)
+        servos[1].moveToAngle(-angle_Fo); // front right (outer)
+        servos[2].moveToAngle(angle_Ri);  // rear left   (inner)
+        servos[3].moveToAngle(angle_Ro);  // rear right  (outer)
 
         // set motors speed (left side: 0,2,4 forward; right side: 1,3,5 inverted)
         motors[0].setMove(forward,speed_front_in);    // front left  (inner)
@@ -123,6 +125,19 @@ void Steering::calculateMotorSpeeds(float R, int speed) {
     speed_rear_out  = speed * sqrt(pow(distance_Lr, 2) + pow(outer, 2)) / R;
     speed_middle_in  = speed * inner / R;
     speed_middle_out = speed * outer / R;
+
+    // Outer corner wheels are always the fastest. If they exceed MaxSpeed, scale all
+    // wheels down together so the speed ratios (and thus the turn) are preserved.
+    float fastest = max(speed_front_out, speed_rear_out);
+    if (fastest > MaxSpeed) {
+        float scale = MaxSpeed / fastest;
+        speed_front_in   *= scale;
+        speed_front_out  *= scale;
+        speed_rear_in    *= scale;
+        speed_rear_out   *= scale;
+        speed_middle_in  *= scale;
+        speed_middle_out *= scale;
+    }
 }
 
 
