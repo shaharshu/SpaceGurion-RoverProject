@@ -23,19 +23,21 @@ Steering::Steering(ServoMotor* servo_array, DCmotor* motor_array)
     
 // Set the target speed (0..MaxSpeed) and steering angle (MIN_ANGLE..MAX_ANGLE)
 void Steering::setSpeedAndAngle(int speed, int angle) {
-    // Map the commanded steering angle to an Ackermann turn radius.
-    float steerDeg = fabs((float)angle);
-    if (steerDeg > 80.0) steerDeg = 80.0; // avoid tan() blow-up / sign flip near 90 deg
-    R = distance_Lf / tan(steerDeg * PI / 180.0);
+    // Ackermann math only applies while turning; at angle 0 the radius is infinite.
+    if (angle > 10 || angle < -10) {
+        // Map the commanded steering angle to an Ackermann turn radius.
+        float steerDeg = fabs((float)angle);
+        if (steerDeg > 80.0) steerDeg = 80.0; // avoid tan() blow-up / sign flip near 90 deg
+        R = distance_Lf / tan(steerDeg * PI / 180.0);
 
-    float minRadius = ROVER_WIDTH / 2 + 1.0;
-    if (R < minRadius) R = minRadius;
+        float minRadius = ROVER_WIDTH / 2 + 1.0;
+        if (R < minRadius) R = minRadius;
 
-    // calculate angles and speeds using the Ackerman geometry
-    calculateSteeringAngles(R);
-    calculateMotorSpeeds(R, speed);
+        // calculate angles and speeds using the Ackerman geometry
+        calculateSteeringAngles(R);
+        calculateMotorSpeeds(R, speed);
+    }
 
-           
     // steering Right
     if (angle > 10) {
         // Set all steering steering wheels to the specified angle
@@ -123,6 +125,19 @@ void Steering::calculateMotorSpeeds(float R, int speed) {
     speed_rear_out  = speed * sqrt(pow(distance_Lr, 2) + pow(outer, 2)) / R;
     speed_middle_in  = speed * inner / R;
     speed_middle_out = speed * outer / R;
+
+    // Outer corner wheels are always the fastest. If they exceed MaxSpeed, scale all
+    // wheels down together so the speed ratios (and thus the turn) are preserved.
+    float fastest = max(speed_front_out, speed_rear_out);
+    if (fastest > MaxSpeed) {
+        float scale = MaxSpeed / fastest;
+        speed_front_in   *= scale;
+        speed_front_out  *= scale;
+        speed_rear_in    *= scale;
+        speed_rear_out   *= scale;
+        speed_middle_in  *= scale;
+        speed_middle_out *= scale;
+    }
 }
 
 

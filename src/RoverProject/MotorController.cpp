@@ -57,6 +57,9 @@ void DCmotor::setMove(bool forward, int speed) {
         if (speed > MaxSpeed) {
             speed = MaxSpeed;
         }
+        if (speed < 0) {
+            speed = 0;
+        }
         
         if (forward) {
             analogWrite(IN1, speed);

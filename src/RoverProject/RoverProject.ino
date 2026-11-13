@@ -50,6 +50,13 @@ void setup() {
 void loop(){
   // update rc controller
   rc.update();
+
+  // failsafe: stop driving if the receiver link is lost
+  if (!rc.isconnected()) {
+    stopAllMotors();
+    return;
+  }
+
   ch0 = rc.readChannel(0,MIN_ANGLE,MAX_ANGLE); // Right Stick X - Steering angle
   ch2 = rc.readChannel(2,0,MaxSpeed);          // Left Stick Y - Throttle speed
   
