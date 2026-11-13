@@ -34,8 +34,11 @@ int RCController::readChannel(int channelIndex, int minValue, int maxValue)
     if (channelIndex < 0 || channelIndex >= 6) {
         return 0; // Return 0 for invalid index
     }
-    int inputValue = ibus.readChannel(channelIndex);
-    
+    return mapChannelValue(channelIndex, ibus.readChannel(channelIndex), minValue, maxValue);
+}
+
+int RCController::mapChannelValue(int channelIndex, int inputValue, int minValue, int maxValue)
+{
     // Apply noise margin at the edges of the controller range
     if (inputValue < controllerMinValue + noiseMargine) {
             return minValue; // Treat as minimum value

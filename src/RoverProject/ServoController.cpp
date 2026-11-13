@@ -19,7 +19,7 @@ void ServoMotor::init() {
     _currentAngle = 0; // Start at middle position
 
     int pulse = map(0, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
-    _servo->writeMicroseconds(pulse); // Move to middle position
+    _servo->write(pulse); // Move to middle position (values > 360 are taken as microseconds)
 }
 
 // Set servo to specific angle immediately
@@ -31,7 +31,10 @@ void ServoMotor::setAngle(int angle) {
         _servo->attach(_pin, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
     }
     int pulse = map(angle, MIN_ANGLE, MAX_ANGLE, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH); // Map angle to pulse width
-    _servo->writeMicroseconds(pulse); 
+    // Stop any running ease and use write() (not writeMicroseconds) so ServoEasing tracks
+    // this position as the start point for the next moveToAngle().
+    _servo->stop();
+    _servo->write(pulse);
     _currentAngle = angle;
 }
 

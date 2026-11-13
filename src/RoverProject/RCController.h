@@ -38,6 +38,7 @@ class RCController {
         void update(); // updates the controller state, must be called every main loop iteration (iBus frames arrive every ~7ms).
         bool isconnected(); // returns true if a frame was received within the last linkTimeoutLimit ms, false otherwise.
         int readChannel(int channelIndex, int minValue = controllerMinValue, int maxValue = controllerMaxValue); // returns value of selected channel index, in operation range of minValue to maxValue, and noise margine.
+        static int mapChannelValue(int channelIndex, int inputValue, int minValue = controllerMinValue, int maxValue = controllerMaxValue); // maps a raw channel value (1000..2000) the same way readChannel does; usable without a receiver (bench tests).
 
 };
 
