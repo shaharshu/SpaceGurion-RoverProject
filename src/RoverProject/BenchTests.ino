@@ -16,18 +16,16 @@ constexpr bool testEachServo = true;
 constexpr bool testSteering  = true;
 constexpr bool testDrive     = true;
 
-// Limit used when testing a servo alone. Steering never commands more than ~90 deg;
-// raise toward MAX_ANGLE only if the linkage can physically turn that far.
-constexpr int servoTestLimit = 90;
-// Commands beyond MIN_ANGLE/MAX_ANGLE to verify clamping. This drives the servo through its
-// full 270 deg range, so enable only with the servo disconnected from the wheel.
-constexpr bool testServoClamp = false;
+// Limit used when testing a servo alone: the full range of the 270 deg servos (-135..135).
+constexpr int servoTestLimit = MAX_ANGLE;
+// Commands beyond MIN_ANGLE/MAX_ANGLE and checks they are clamped to the limits.
+constexpr bool testServoClamp = true;
 
 constexpr int driveTestSpeed = 100;
 
 constexpr unsigned long motorTestStepDurationMs = 3000;
-constexpr unsigned long servoImmediateStepMs    = 1000;
-constexpr unsigned long servoSmoothStepMs       = 2000;
+constexpr unsigned long servoImmediateStepMs    = 1500; // a full 270 deg jump needs ~1 s
+constexpr unsigned long servoSmoothStepMs       = 3000; // largest simulated move is 203 deg at ~90 deg/s
 constexpr unsigned long steeringStepMs          = 2000;
 constexpr unsigned long driveStepMs             = 3000;
 
