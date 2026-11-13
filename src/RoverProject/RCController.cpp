@@ -5,7 +5,8 @@ void RCController::begin(HardwareSerial &serial)
 {
   // Initialize USB Serial for debugging at a fast speed
   // Serial.begin(115200); should be defined in main file, not here.
-    ibus.begin(serial); 
+    // NOTIMER: update() is the only caller of ibus.loop(); the default timer ISR would also call it and corrupt frames.
+    ibus.begin(serial, IBUSBM_NOTIMER);
 }
 
 void RCController::update() 

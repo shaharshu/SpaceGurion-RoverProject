@@ -35,7 +35,7 @@ class RCController {
         
     public:
         void begin(HardwareSerial &serial); // initializes the controller with given serial port.
-        void update(); // updates the controller state, needs to be called at least once in the main loop to refresh the data.
+        void update(); // updates the controller state, must be called every main loop iteration (iBus frames arrive every ~7ms).
         bool isconnected(); // returns true if a frame was received within the last linkTimeoutLimit ms, false otherwise.
         int readChannel(int channelIndex, int minValue = controllerMinValue, int maxValue = controllerMaxValue); // returns value of selected channel index, in operation range of minValue to maxValue, and noise margine.
 
