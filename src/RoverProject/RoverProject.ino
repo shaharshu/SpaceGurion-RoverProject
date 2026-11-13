@@ -10,8 +10,9 @@
 // Setup variables and objects
 // ===============================
 
-// true: run the bench test sequence (BenchTests.ino) instead of RC driving
-constexpr bool runBenchTests = true;
+// Test modes - run instead of RC driving. Enable at most one; both false = normal RC driving.
+constexpr bool runBenchTests = false;     // bench test sequence (BenchTests.ino)
+constexpr bool runFigureEightTest = true; // rover drives a figure 8 on its own (FigureEightTest.ino)
 
 // setup rc controller
 RCController rc;
@@ -44,6 +45,8 @@ void setup() {
 
   if (runBenchTests) {
     benchTestsBegin();
+  } else if (runFigureEightTest) {
+    figureEightBegin();
   } else {
     rc.begin(Serial1);
   }
@@ -53,6 +56,10 @@ void setup() {
 void loop(){
   if (runBenchTests) {
     benchTestsUpdate();
+    return;
+  }
+  if (runFigureEightTest) {
+    figureEightUpdate();
     return;
   }
 
